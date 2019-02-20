@@ -1,0 +1,173 @@
+SCRIP PRAKTIKUM 3
+
+mysql> create databses mahasiswa;
+mysql> use mahasiswa;
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| latihan01          |
+| mahasiswa          |
+| mysql              |
+| pegawai            |
+| performance_schema |
+| sekolah            |
+| test               |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table biodata
+    -> (nim varchar (10) primary key,
+    -> nama varchar (20) not null,
+    -> alamat_jalan varchar (20) not null,
+    -> kota varchar (15) not null,
+    -> kode_pos varchar (15) not null,
+    -> no_hp varchar (15) not null,
+    -> jenis_kelamin varchar (10) not null,
+    -> kode_dosen varchar (15) not null);
+Query OK, 0 rows affected (0.22 sec)
+mysql> desc biodata;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| nim           | varchar(10) | NO   | PRI | NULL    |       |
+| nama          | varchar(20) | NO   |     | NULL    |       |
+| alamat_jalan  | varchar(20) | NO   |     | NULL    |       |
+| kota          | varchar(15) | NO   |     | NULL    |       |
+| kode_pos      | varchar(15) | NO   |     | NULL    |       |
+| no_hp         | varchar(15) | NO   |     | NULL    |       |
+| jenis_kelamin | varchar(10) | NO   |     | NULL    |       |
+| kode_dosen    | varchar(15) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+8 rows in set (0.16 sec)
+mysql> alter table biodata
+    -> add tanggal_lahir date after jenis_kelamin;
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> desc biodata;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| nim           | varchar(10) | NO   | PRI | NULL    |       |
+| nama          | varchar(20) | NO   |     | NULL    |       |
+| alamat_jalan  | varchar(20) | NO   |     | NULL    |       |
+| kota          | varchar(15) | NO   |     | NULL    |       |
+| kode_pos      | varchar(15) | NO   |     | NULL    |       |
+| no_hp         | varchar(15) | NO   |     | NULL    |       |
+| jenis_kelamin | varchar(10) | NO   |     | NULL    |       |
+| tanggal_lahir | date        | YES  |     | NULL    |       |
+| kode_dosen    | varchar(15) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.29 sec)
+insert into biodata
+    (nim, nama, alamat_jalan, kota, kode_pos, no_hp, jenis_kelamin, tanggal_lahir, kode_dosen)
+    values
+    ("11223344", "Ari Santoso", " ", "Bekasi", " ", "Laki-Laki", "1998-10-12", " "),
+    ("11223345", "Ario Talib", " ", "Cikarang", " ", "Laki-Laki", "1999-11-16", " "),
+    ("11223346", "Dina Marlina", " ", "Karawang", " ", "Perempuan","1997-12-01", " "),
+    ("11223347", "Lisa Ayu", " ", "Bekasi", " ", " ", "Perempuan", "1996-01-02", " " ),
+    ("11223348", "Tiara Indah", " ", "Bekasi", " ", " ", "Perempuan", "1980-02-05", " " ),
+    ("11223349", "Anton Sinaga", " ", "Cikarang", " ", " ", "Laki-Laki", "1988-03-10", " " );
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+mysql> select * from biodata;
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| nim      | nama         | alamat_jalan | kota     | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| 11223344 | Ari Santoso  |              | Bekasi   |          |       | Laki-Laki     | 1998-10-12    |            |
+| 11223345 | Ario Talib   |              | Cikarang |          |       | Laki-Laki     | 1999-11-16    |            |
+| 11223346 | Dina Marlina |              | Karawang |          |       | Perempuan     | 1997-12-01    |            |
+| 11223347 | Lisa Ayu     |              | Bekasi   |          |       | Perempuan     | 1996-01-02    |            |
+| 11223348 | Tiara Indah  |              | Bekasi   |          |       | Perempuan     | 1980-02-05    |            |
+| 11223349 | Anton Sinaga |              | Cikarang |          |       | Laki-Laki     | 1988-03-10    |            |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+6 rows in set (0.06 sec)
+mysql> update biodata set tanggal_lahir = "1979-08-01" where nim = "11223344";
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| nim      | nama         | alamat_jalan | kota     | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| 11223344 | Ari Santoso  |              | Bekasi   |          |       | Laki-Laki     | 1979-08-01    |            |
+| 11223345 | Ario Talib   |              | Cikarang |          |       | Laki-Laki     | 1999-11-16    |            |
+| 11223346 | Dina Marlina |              | Karawang |          |       | Perempuan     | 1997-12-01    |            |
+| 11223347 | Lisa Ayu     |              | Bekasi   |          |       | Perempuan     | 1996-01-02    |            |
+| 11223348 | Tiara Indah  |              | Bekasi   |          |       | Perempuan     | 1980-02-05    |            |
+| 11223349 | Anton Sinaga |              | Cikarang |          |       | Laki-Laki     | 1988-03-10    |            |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+mysql> delete from biodata where nim = "11223346";
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from biodata;
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| nim      | nama         | alamat_jalan | kota     | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| 11223344 | Ari Santoso  |              | Bekasi   |          |       | Laki-Laki     | 1998-10-12    |            |
+| 11223345 | Ario Talib   |              | Cikarang |          |       | Laki-Laki     | 1999-11-16    |            |
+| 11223347 | Lisa Ayu     |              | Bekasi   |          |       | Perempuan     | 1996-01-02    |            |
+| 11223348 | Tiara Indah  |              | Bekasi   |          |       | Perempuan     | 1980-02-05    |            |
+| 11223349 | Anton Sinaga |              | Cikarang |          |       | Laki-Laki     | 1988-03-10    |            |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from biodata
+    -> where tanggal_lahir >= "1996-1-2";
++----------+-------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| nim      | nama        | alamat_jalan | kota     | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+-------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| 11223344 | Ari Santoso |              | Bekasi   |          |       | Laki-Laki     | 1998-10-12    |            |
+| 11223345 | Ario Talib  |              | Cikarang |          |       | Laki-Laki     | 1999-11-16    |            |
+| 11223347 | Lisa Ayu    |              | Bekasi   |          |       | Perempuan     | 1996-01-02    |            |
++----------+-------------+--------------+----------+----------+-------+---------------+---------------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select nama, kota, jenis_kelamin from biodata
+    -> where kota = "Bekasi"
+    -> and jenis_kelamin = "Perempuan"
+    -> and jenis_kelamin = "Perempuan";
++-------------+--------+---------------+
+| nama        | kota   | jenis_kelamin |
++-------------+--------+---------------+
+| Lisa Ayu    | Bekasi | Perempuan     |
+| Tiara Indah | Bekasi | Perempuan     |
++-------------+--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from biodata
+    -> where kota = " Bekasi" and jenis_kelamin = "Laki-Laki"
+    -> or tanggal_lahir <= "1997" and jenis_kelamin = "perempuan"
+    -> order by nama;
++----------+-------------+--------------+--------+----------+-------+---------------+---------------+------------+
+| nim      | nama        | alamat_jalan | kota   | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+-------------+--------------+--------+----------+-------+---------------+---------------+------------+
+| 11223347 | Lisa Ayu    |              | Bekasi |          |       | Perempuan     | 1996-01-02    |            |
+| 11223348 | Tiara Indah |              | Bekasi |          |       | Perempuan     | 1980-02-05    |            |
++----------+-------------+--------------+--------+----------+-------+---------------+---------------+------------+
+2 rows in set, 1 warning (0.09 sec)
+
+mysql> select nama, alamat_jalan from biodata;
++--------------+--------------+
+| nama         | alamat_jalan |
++--------------+--------------+
+| Ari Santoso  |              |
+| Ario Talib   |              |
+| Lisa Ayu     |              |
+| Tiara Indah  |              |
+| Anton Sinaga |              |
++--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from biodata
+    -> order by nama asc;
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| nim      | nama         | alamat_jalan | kota     | kode_pos | no_hp | jenis_kelamin | tanggal_lahir | kode_dosen |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+| 11223349 | Anton Sinaga |              | Cikarang |          |       | Laki-Laki     | 1988-03-10    |            |
+| 11223344 | Ari Santoso  |              | Bekasi   |          |       | Laki-Laki     | 1998-10-12    |            |
+| 11223345 | Ario Talib   |              | Cikarang |          |       | Laki-Laki     | 1999-11-16    |            |
+| 11223347 | Lisa Ayu     |              | Bekasi   |          |       | Perempuan     | 1996-01-02    |            |
+| 11223348 | Tiara Indah  |              | Bekasi   |          |       | Perempuan     | 1980-02-05    |            |
++----------+--------------+--------------+----------+----------+-------+---------------+---------------+------------+
+5 rows in set (0.00 sec)
+
